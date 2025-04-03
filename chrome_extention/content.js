@@ -1,8 +1,16 @@
 function getCartItems() {
     let items = [];
-    
-    document.querySelectorAll(".sc-list-item-content").forEach(item => {
-        let title = item.querySelector(".sc-product-title")?.innerText.trim() || "No Title";
+
+    // ✅ 「カート内の商品」エリアを特定（id が "sc-active" で始まる要素）
+    let activeCart = document.querySelector('[id^="sc-active"]');
+    if (!activeCart) {
+        alert("カートが空です！");
+        return;
+    }
+
+    // ✅ カート内の商品だけを取得
+    activeCart.querySelectorAll(".sc-list-item-content").forEach(item => {
+        let title = item.querySelector(".a-truncate-cut")?.innerText.trim() || "No Title";
         let price = item.querySelector(".sc-item-price-block .a-offscreen")?.innerText.trim() || "No Price";
         let imgElement = item.querySelector("img.sc-product-image");
         let imageUrl = imgElement ? imgElement.src : "No Image";
