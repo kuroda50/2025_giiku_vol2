@@ -33,9 +33,10 @@ function getCartItems() {
     }
 }
 
+
 // Chrome拡張のdownloads APIを使用
 function downloadImage(url, filename) {
     chrome.runtime.sendMessage({ action: "download", url, filename });
 }
 
-getCartItems();
+setTimeout(getCartItems, 1000);
