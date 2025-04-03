@@ -20,6 +20,14 @@
     {
       "matches": ["https://www.amazon.co.jp/gp/cart/view.html*"],
       "js": ["content.js"]
+    },
+    {
+      "matches": ["https://www.amazon.co.jp/gp/cart/"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["https://www.amazon.co.jp/cart?ref_=sw_gtc"],
+      "js": ["content.js"]
     }
   ]
 }
