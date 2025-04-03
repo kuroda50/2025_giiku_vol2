@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import { AI } from './ai';
+import { useCartData } from './ai';
 
 function App() {
-  AI();
+  useCartData();
   return (
     <div className="App">
       <header className="App-header">

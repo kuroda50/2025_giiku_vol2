@@ -15,6 +15,7 @@ function getCartItems() {
     });
 
     if (items.length > 0) {
+        chrome.runtime.sendMessage({action: "cartItems", items});
         let blob = new Blob([items.join("\n")], { type: "text/plain" });
         let a = document.createElement("a");
         a.href = URL.createObjectURL(blob);

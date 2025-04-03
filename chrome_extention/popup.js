@@ -25,3 +25,15 @@ function getCartItems() {
         alert("カートが空です！");
     }
 }
+
+// document.addEventListener("DOMContentLoaded", () => {
+//     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+//         console.log("popupでカートアイテムを受信:", message.items);
+//         if (message.action === "sendToPopup") {
+//             // 取得したカート情報をReactに渡す（例えばwindow.localStorageなどを使う）
+//             console.log("カートデータを保存:", message.items);
+//             localStorage.setItem("cartData", JSON.stringify(message.items));
+//             window.postMessage({ action: "cartDataUpdated" }, "*");
+//         }
+//     });
+// });
