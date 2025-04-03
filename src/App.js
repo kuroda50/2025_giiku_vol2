@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import { AI } from './ai';
 
 function App() {
+  AI();
   return (
     <div className="App">
       <header className="App-header">
