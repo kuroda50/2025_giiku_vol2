@@ -10,7 +10,7 @@ chrome.runtime.onInstalled.addListener(() => {
                     // カート情報が保存されている場合、Reactアプリに遷移
                     setTimeout(() => {
                         chrome.tabs.create({
-                            url: "chrome-extension://eoaodpgnabhkagfjbpkgcmmidaeibefa/build/index.html"
+                            url: "chrome-extension://hpnddalhcpdeppkbaibmgmgaffncdhob/build/index.html"
                         });
 
                         console.log("Reactアプリにリダイレクトしました");
