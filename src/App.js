@@ -1,8 +1,12 @@
+import React, { useState, useEffect } from 'react';
 import { AI } from './ai';
 import './App.css';
 
-function getMessage(){
+let messages = [];
+
+function App() {
   let [cartItems, setCartItems] = useState([]);
+  const [aiResponse, setAiResponse] = useState([]);
   // 仮でサンプルデータを入れておく
   cartItems = [
     {
@@ -18,20 +22,18 @@ function getMessage(){
   ];
   // 仮でサンプルデータを入れておく
 
-  const [aiResponse, setAiResponse] = useState([]);
-
-  useEffect(()=>{
-    if(cartItems.length > 0){
-      AI(cartItems).then((responses)=>{
+  // 一時的にAPIを止める
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      AI(cartItems).then((responses) => {
         setAiResponse(prevResponse => [...prevResponse, ...responses]);
-        console.log("AppでのAIの返答:", responses);
       })
     }
-  },[]);
+  }, []);
 
   console.log("最終的なAIの返答:", aiResponse);//ここにAIからのデータが入ってます
-
-
+  messages = aiResponse;
+  
   // useEffect(() => {
   //   chrome.storage.local.get("amazonCartItems", (data) => {
   //     if (data.amazonCartItems) {
@@ -42,22 +44,23 @@ function getMessage(){
 }
 
 // Messages configuration
-const messages = [
-  "この商品、本当に必要かな？♡",
-  "似たようなものを持ってない？♡",
-  "これがないと困っちゃう？♡",
-  "1週間後もほしいと思うかな？♡",
-  "お財布に優しい買い物？♡",
-  "衝動買いじゃないよね？♡",
-  "長く使えるものかな？♡",
-  "本当に気に入ってる？♡"
-];
+// const messages = [
+//   "この商品、本当に必要かな？♡",
+//   "似たようなものを持ってない？♡",
+//   "これがないと困っちゃう？♡",
+//   "1週間後もほしいと思うかな？♡",
+//   "お財布に優しい買い物？♡",
+//   "衝動買いじゃないよね？♡",
+//   "長く使えるものかな？♡",
+//   "本当に気に入ってる？♡"
+// ];
 
 // DOM elements
 const messageElement = document.getElementById('message');
 const progressElement = document.getElementById('progress');
 const timerElement = document.getElementById('timer');
 const proceedBtn = document.getElementById('proceedBtn');
+const productElement = document.getElementById('product-info');
 
 // State variables
 let currentMessageIndex = 0;
@@ -67,13 +70,10 @@ let timerInterval;
 
 // Message animation function
 function updateMessage() {
-  messageElement.style.opacity = '0';
+  messageElement.textContent = messages[0];
+  messageElement.style.opacity = '1';
 
-  setTimeout(() => {
-    messageElement.textContent = messages[currentMessageIndex];
-    messageElement.style.opacity = '1';
-    currentMessageIndex = (currentMessageIndex + 1) % messages.length;
-  }, 300);
+
 }
 
 // Timer function
@@ -98,9 +98,8 @@ function updateTimer() {
 
 // Initialize the page
 function initialize() {
-  getMessage();
   // Set initial message
-  updateMessage();
+   updateMessage();
 
   // Start message rotation
   messageInterval = setInterval(updateMessage, 4000);
@@ -118,3 +117,5 @@ function initialize() {
 
 // Start everything when the page loads
 document.addEventListener('DOMContentLoaded', initialize);
+
+export default App;

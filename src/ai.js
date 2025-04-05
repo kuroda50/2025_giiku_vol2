@@ -99,7 +99,6 @@ export async function AI(cartItems) {
   for (let i = 0; i < cartItems.length; i++) {
     if (i % 2 === 1) {
       aiResponse.push(completion.choices[0].message.content);
-      // console.log("AIの返答:", aiResponse[i]);
     }
   }
   return aiResponse;
