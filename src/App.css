@@ -1,38 +1,252 @@
-.App {
+/* Base styles */
+body {
+  font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif;
+  background-color: #fff5f7;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.container {
+  max-width: 1024px;
+  width: 100%;
+  background-color: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 25px rgba(255, 182, 193, 0.2);
+  padding: 2rem;
+  position: relative;
+  border: 2px solid #ffd1dc;
+}
+
+/* Decorative elements */
+.heart {
+  position: absolute;
+  font-size: 1.5rem;
+  color: #ffb6c1;
+}
+
+.heart-top {
+  top: -1rem;
+  left: 1.5rem;
+}
+
+.heart-bottom {
+  bottom: -1rem;
+  right: 1.5rem;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.star {
+  position: absolute;
+  font-size: 1rem;
+  color: #ffccd5;
+  animation: twinkle 2s infinite;
+}
+
+.star-1 {
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.star-2 {
+  top: 15%;
+  right: 10%;
+  animation-delay: 0.3s;
+}
+
+/* Content layout */
+.content-wrapper {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Product section */
+.product-info {
+  flex: 1;
+  background-color: #fef8fa;
+  padding: 1.5rem;
+  border-radius: 1rem;
+}
+
+.product-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #ff8da1;
+  margin: 0 0 0.75rem;
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff6b8b;
+  margin: 0 0 1rem;
+}
+
+.product-description {
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 1rem;
+}
+
+.product-image {
+  width: 8rem;
+  height: 8rem;
+  object-fit: cover;
+  border: 2px solid #ffd1dc;
+  border-radius: 0.75rem;
+  padding: 0.25rem;
+  background: white;
+}
+
+/* Character section */
+.character-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.speech-bubble {
+  background-color: #fef1f4;
+  border: 2px dashed #ffb6c1;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-right: 3rem;
+  position: relative;
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  right: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 1rem solid #fef1f4;
+  border-top: 0.75rem solid transparent;
+  border-bottom: 0.75rem solid transparent;
+}
+
+.message-text {
+  color: #ff6b8b;
+  font-size: 1.125rem;
+  text-align: center;
+  margin: 0;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+}
+
+.character-container {
+  position: absolute;
+  right: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.character-image {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  border: 2px solid #ffd1dc;
+  padding: 0.25rem;
+  background: white;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
+}
+
+/* Timer area */
+.timer-area {
+  background-color: #fef8fa;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+
+.progress-bar {
+  height: 0.75rem;
+  background-color: #ffe6eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.progress {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(to right, #ffaabb, #ff6b8b);
+  transition: width 1s linear;
+  border-radius: 0.5rem;
+}
+
+.timer-text {
+  text-align: center;
+  color: #ff6b8b;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Button area */
+.button-area {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.proceed-button {
+  background-color: #ffb6c1;
   color: white;
+  border: none;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: not-allowed;
+  opacity: 0.5;
+  transition: all 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.proceed-button.active {
+  background-color: #ff8da1;
+  opacity: 1;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.proceed-button.active:hover {
+  background-color: #ff7a93;
+  transform: translateY(-2px);
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cart-icon,
+.arrow-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.continue-shopping {
+  margin-top: 1rem;
+}
+
+.continue-link {
+  color: #ff8da1;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-bottom: 1px dotted #ffb6c1;
+  transition: all 0.2s ease;
+}
+
+.continue-link:hover {
+  color: #ff6b8b;
+  border-bottom-style: solid;
 }
