@@ -1,4 +1,4 @@
-// かわいいメッセージの設定
+// Messages configuration
 const messages = [
   "この商品、本当に必要かな？♡",
   "似たようなものを持ってない？♡",
@@ -10,96 +10,67 @@ const messages = [
   "本当に気に入ってる？♡"
 ];
 
-// DOM要素の取得
+// DOM elements
 const messageElement = document.getElementById('message');
 const progressElement = document.getElementById('progress');
 const timerElement = document.getElementById('timer');
 const proceedBtn = document.getElementById('proceedBtn');
-const characterImage = document.getElementById('character');
 
-// キャラクターの表情（プレースホルダー）
-// 実際の実装では、ここに3つの異なるキャラクター画像のパスを設定します
-const characterImages = [
-  "/api/placeholder/120/120", // 通常
-  "/api/placeholder/120/120", // 考え中
-  "/api/placeholder/120/120"  // 心配
-];
-
-// 現在のメッセージインデックス
+// State variables
 let currentMessageIndex = 0;
-// 各メッセージの表示時間（ミリ秒）
-const messageDelay = 4000;
-// タイマーの合計時間（秒）
-const totalTime = 30;
-// 残り時間
-let timeLeft = totalTime;
-// タイマーID
-let timerId = null;
+let timeLeft = 30;
+let messageInterval;
+let timerInterval;
 
-/**
- * メッセージのアニメーション処理
- * メッセージを徐々にフェードアウトさせてから、新しいメッセージに入れ替えフェードイン
- */
-function animateMessage() {
-  // メッセージをフェードアウト
-  messageElement.style.opacity = 0;
+// Message animation function
+function updateMessage() {
+  messageElement.style.opacity = '0';
   
-  // 0.5秒後に新しいメッセージを表示してフェードイン
   setTimeout(() => {
     messageElement.textContent = messages[currentMessageIndex];
-    messageElement.style.opacity = 1;
-    
-    // キャラクターの表情をランダムに変更
-    characterImage.src = characterImages[Math.floor(Math.random() * characterImages.length)];
-    
-    // 次のメッセージインデックスに進む（配列の最後まで行ったら最初に戻る）
+    messageElement.style.opacity = '1';
     currentMessageIndex = (currentMessageIndex + 1) % messages.length;
-  }, 500);
+  }, 300);
 }
 
-/**
- * タイマーの開始
- * 1秒ごとにカウントダウンしてプログレスバーとテキストを更新
- */
-function startTimer() {
-  timerId = setInterval(() => {
-    timeLeft--;
-    
-    // プログレスバーの更新
-    const progressPercentage = ((totalTime - timeLeft) / totalTime) * 100;
-    progressElement.style.width = `${progressPercentage}%`;
-    
-    // タイマーテキストの更新
-    timerElement.textContent = `♡ 考える時間: ${timeLeft}秒 ♡`;
-    
-    // タイマー終了時の処理
-    if (timeLeft <= 0) {
-      // タイマーを停止
-      clearInterval(timerId);
-      // ボタンをアクティブにする
-      proceedBtn.classList.add('active');
-      proceedBtn.disabled = false;
-      // テキストを更新
-      timerElement.textContent = "♡ 考える時間が終わりました ♡";
-    }
-  }, 1000);
-}
-
-// 初期メッセージの表示
-animateMessage();
-
-// メッセージの自動切り替えを設定（4秒ごと）
-setInterval(animateMessage, messageDelay);
-
-// タイマーの開始
-startTimer();
-
-// ボタンのクリックイベント設定
-proceedBtn.addEventListener('click', function() {
+// Timer function
+function updateTimer() {
+  timeLeft--;
+  
+  // Update progress bar
+  const progress = ((30 - timeLeft) / 30) * 100;
+  progressElement.style.width = `${progress}%`;
+  
+  // Update timer text
+  timerElement.textContent = `♡ 考える時間: ${timeLeft}秒 ♡`;
+  
+  // Check if timer is complete
   if (timeLeft <= 0) {
-    // 30秒経過後のみ処理を実行
-    alert('カートに進みます♡');
-    // ここにAmazonのカートページにリダイレクトする処理などを追加
-    // 例: window.location.href = 'https://amazon.co.jp/cart';
+    clearInterval(timerInterval);
+    proceedBtn.classList.add('active');
+    proceedBtn.disabled = false;
+    timerElement.textContent = '♡ 考える時間が終わりました ♡';
   }
-});
+}
+
+// Initialize the page
+function initialize() {
+  // Set initial message
+  updateMessage();
+  
+  // Start message rotation
+  messageInterval = setInterval(updateMessage, 4000);
+  
+  // Start timer
+  timerInterval = setInterval(updateTimer, 1000);
+  
+  // Setup proceed button
+  proceedBtn.addEventListener('click', () => {
+    if (timeLeft <= 0) {
+      alert('カートに進みます♡');
+    }
+  });
+}
+
+// Start everything when the page loads
+document.addEventListener('DOMContentLoaded', initialize);
