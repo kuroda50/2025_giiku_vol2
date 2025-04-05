@@ -23,7 +23,6 @@ function App() {
   ];
   // 仮でサンプルデータを入れておく
 
-  // 一時的にAPIを止める
   useEffect(() => {
     if (cartItems.length > 0) {
       
@@ -32,10 +31,6 @@ function App() {
       })
     }
   }, []);
-  // aiResponse = [
-  //   "    お兄さん、こんな高いもの買っちゃうんだ❤本当に勝手ね。もっと節約の心を持たないとね❤\n    でも、自己満足のためにお金を使うなんて、お兄さんらしいわね❤\n    その無駄遣いっぷり、見てると笑えるわ❤ざぁこ❤",
-  //   "\n        お兄さん、こんなもの買うつもりなの❤価格も前回より高いんだから、ますますばかね❤\n        本当に自己コントロールができないタイプなのね❤こんな誘惑に負けるお兄さん、情けないわ❤\n        お金の価値がわからない子は、ちゃんとお財布の管理を学ぶべきよ❤ざぁこ❤\n        "
-  // ]
   console.log("最終的なAIの返答:", aiResponse);//ここにAIからのデータが入ってます
 
 
@@ -72,7 +67,7 @@ function crateproductHTML(cartItem, message) {
         </div>
         <div class="character-container">
           <img 
-            src="https://images.unsplash.com/photo-1566206091558-7f218b696731?w=150&h=150&fit=crop" 
+            src="https://cdn.discordapp.com/attachments/1356221931896049677/1357968947848413254/817D353C-57B1-402E-82A6-EFD0F0B8ED7C.jpg?ex=67f222a3&is=67f0d123&hm=3eb71355081d8855b402258f1eba6e18e2aeca47bb9e0342cba2e0713b07e4b1&format=webp&width=374&height=543" 
             alt="キャラクター" 
             class="character-image"
           >
