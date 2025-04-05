@@ -5,13 +5,14 @@ if (window.location.href.includes("https://www.amazon.co.jp/gp/cart/view.html?re
     // データ取得前に遅延を設定 (2秒)
     setTimeout(() => {
         // 「sc-secondary-list」にアイテムが含まれているか確認
-        let secondaryList = document.querySelector("#sc-secondary-list");
+        let secondaryList = document.querySelector("#sc-active-items-header");
         if (secondaryList) {
             console.log("「sc-secondary-list」内のアイテムは除外します");
         }
 
         // カート内のアイテムを取得（「sc-secondary-list」に含まれていないものを除外）
         let cartItems = document.querySelectorAll(".sc-list-item-content");
+        console.log(secondaryList);
 
         cartItems.forEach(item => {
             // 「sc-secondary-list」のアイテムを除外
