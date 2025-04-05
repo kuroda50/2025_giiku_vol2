@@ -1,43 +1,421 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>本当に必要ですか？</title>
+  <style>
+    body {
+      font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif;
+      background-color: #fff5f7;
+      margin: 0;
+      padding: 20px;
+      color: #5d5d5d;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(255, 182, 193, 0.3);
+      padding: 25px;
+      position: relative;
+      border: 2px solid #ffccd5;
+    }
+    
+    .product-info {
+      display: flex;
+      margin-bottom: 30px;
+      background-color: #fef8fa;
+      padding: 15px;
+      border-radius: 12px;
+    }
+    
+    .product-details {
+      flex: 2;
+      padding-right: 20px;
+    }
+    
+    .product-image {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      border: 2px solid #ffccd5;
+      border-radius: 12px;
+      padding: 5px;
+      background-color: white;
+    }
+    
+    .product-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #ff8da1;
+    }
+    
+    .product-price {
+      font-size: 20px;
+      color: #ff6b8b;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    
+    .product-description {
+      font-size: 14px;
+      color: #7d7d7d;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+    
+    .reflection-area {
+      display: flex;
+      margin-bottom: 30px;
+      min-height: 150px;
+    }
+    
+    .message-area {
+      flex: 3;
+      position: relative;
+    }
+    
+    .speech-bubble {
+      position: relative;
+      background: #ffedf2;
+      border-radius: 20px;
+      padding: 18px;
+      border: 2px dashed #ffb6c1;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(255, 182, 193, 0.2);
+    }
+    
+    .speech-bubble:after {
+      content: '';
+      position: absolute;
+      right: -15px;
+      top: 40px;
+      border-width: 15px 0 15px 15px;
+      border-style: solid;
+      border-color: transparent transparent transparent #ffedf2;
+    }
+    
+    .speech-bubble:before {
+      content: '';
+      position: absolute;
+      right: -18px;
+      top: 40px;
+      border-width: 15px 0 15px 15px;
+      border-style: solid;
+      border-color: transparent transparent transparent #ffb6c1;
+      z-index: -1;
+    }
+    
+    .message-text {
+      font-size: 18px;
+      line-height: 1.5;
+      overflow: hidden;
+      height: 100%;
+      color: #ff6b8b;
+      font-weight: 500;
+      text-align: center;
+      transition: opacity 0.5s ease;
+    }
+    
+    .character-area {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-left: 20px;
+    }
+    
+    .character {
+      width: 130px;
+      height: 130px;
+      border: 2px solid #ffccd5;
+      border-radius: 50%;
+      padding: 5px;
+      background-color: white;
+      box-shadow: 0 4px 10px rgba(255, 182, 193, 0.3);
+    }
+    
+    .timer-area {
+      text-align: center;
+      margin-bottom: 25px;
+      background-color: #fef8fa;
+      padding: 12px;
+      border-radius: 15px;
+      border: 1px solid #ffe0e5;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 14px;
+      background-color: #ffe0e5;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 10px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .progress {
+      height: 100%;
+      background: linear-gradient(to right, #ffaabb, #ff6b8b);
+      width: 0%;
+      transition: width 1s linear;
+      border-radius: 10px;
+    }
+    
+    .timer-text {
+      font-size: 16px;
+      color: #ff6b8b;
+      font-weight: bold;
+    }
+    
+    .button-area {
+      text-align: center;
+    }
+    
+    .proceed-button {
+      padding: 14px 35px;
+      background-color: #ffb6c1;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: not-allowed;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+      color: white;
+      box-shadow: 0 4px 8px rgba(255, 182, 193, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .proceed-button.active {
+      background-color: #ff8da1;
+      opacity: 1;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(255, 139, 161, 0.4);
+    }
+    
+    .proceed-button.active:hover {
+      background-color: #ff7a93;
+      transform: translateY(-2px);
+    }
+    
+    .cancel-link {
+      display: inline-block;
+      margin-top: 15px;
+      color: #ff8da1;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-bottom: 1px dotted #ffb6c1;
+      padding-bottom: 2px;
+    }
+    
+    .cancel-link:hover {
+      color: #ff6b8b;
+      border-bottom: 1px solid #ff6b8b;
+    }
+    
+    /* かわいいハートの装飾 */
+    .container:before {
+      content: "♥";
+      position: absolute;
+      top: -15px;
+      left: 20px;
+      font-size: 30px;
+      color: #ffb6c1;
+    }
+    
+    .container:after {
+      content: "♥";
+      position: absolute;
+      bottom: -15px;
+      right: 20px;
+      font-size: 30px;
+      color: #ffb6c1;
+    }
+    
+    /* かわいいスターの装飾 */
+    @keyframes twinkle {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+    
+    .star {
+      position: absolute;
+      font-size: 14px;
+      color: #ffccd5;
+      animation: twinkle 2s infinite;
+    }
+    
+    .star:nth-child(1) {
+      top: 10%;
+      left: 5%;
+      animation-delay: 0s;
+    }
+    
+    .star:nth-child(2) {
+      top: 15%;
+      right: 10%;
+      animation-delay: 0.3s;
+    }
+    
+    .star:nth-child(3) {
+      bottom: 15%;
+      left: 8%;
+      animation-delay: 0.6s;
+    }
+    
+    .star:nth-child(4) {
+      bottom: 10%;
+      right: 5%;
+      animation-delay: 0.9s;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 装飾用スター -->
+    <div class="star">★</div>
+    <div class="star">★</div>
+    <div class="star">★</div>
+    <div class="star">★</div>
+    
+    <div class="product-info">
+      <div class="product-details">
+        <div id="root"></div>
+      </div>
+      <img src="/api/placeholder/120/120" alt="商品画像" class="product-image">
+    </div>
+    
+    <div class="reflection-area">
+      <div class="message-area">
+        <div class="speech-bubble">
+          <div id="message" class="message-text"></div>
+        </div>
+      </div>
+      <div class="character-area">
+        <img id="character" src="/api/placeholder/120/120" alt="キャラクター" class="character">
+      </div>
+    </div>
+    
+    <div class="timer-area">
+      <div class="progress-bar">
+        <div id="progress" class="progress"></div>
+      </div>
+      <div id="timer" class="timer-text">♡ 考える時間: 30秒 ♡</div>
+    </div>
+    
+    <div class="button-area">
+      <button id="proceedBtn" class="proceed-button">カートに進む</button>
+      <div>
+        <a href="#" class="cancel-link">♡ 買い物を続ける ♡</a>
+      </div>
+    </div>
+  </div>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+  <script>
+    // かわいいメッセージの設定
+    const messages = [
+      "この商品、本当に必要かな？♡",
+      "似たようなものを持ってない？♡",
+      "これがないと困っちゃう？♡",
+      "1週間後もほしいと思うかな？♡",
+      "お財布に優しい買い物？♡",
+      "衝動買いじゃないよね？♡",
+      "長く使えるものかな？♡",
+      "本当に気に入ってる？♡"
+    ];
+    
+    // 要素の取得
+    const messageElement = document.getElementById('message');
+    const progressElement = document.getElementById('progress');
+    const timerElement = document.getElementById('timer');
+    const proceedBtn = document.getElementById('proceedBtn');
+    const characterImage = document.getElementById('character');
+    
+    // キャラクターの表情（プレースホルダー）
+    const characterImages = [
+      "/api/placeholder/120/120", // 通常
+      "/api/placeholder/120/120", // 考え中
+      "/api/placeholder/120/120"  // 心配
+    ];
+    
+    // 現在のメッセージインデックス
+    let currentMessageIndex = 0;
+    // 各メッセージの表示時間（ミリ秒）
+    const messageDelay = 4000;
+    // タイマーの合計時間（秒）
+    const totalTime = 30;
+    // 残り時間
+    let timeLeft = totalTime;
+    // タイマーID
+    let timerId = null;
+    
+    // メッセージのアニメーション
+    function animateMessage() {
+      messageElement.style.opacity = 0;
+      
+      setTimeout(() => {
+        messageElement.textContent = messages[currentMessageIndex];
+        messageElement.style.opacity = 1;
+        
+        // キャラクターの表情を変更
+        characterImage.src = characterImages[Math.floor(Math.random() * characterImages.length)];
+        
+        // 次のメッセージへ
+        currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+      }, 500);
+    }
+    
+    // タイマーの開始
+    function startTimer() {
+      timerId = setInterval(() => {
+        timeLeft--;
+        
+        // プログレスバーの更新
+        const progressPercentage = ((totalTime - timeLeft) / totalTime) * 100;
+        progressElement.style.width = `${progressPercentage}%`;
+        
+        // タイマーテキストの更新
+        timerElement.textContent = `♡ 考える時間: ${timeLeft}秒 ♡`;
+        
+        // タイマー終了時
+        if (timeLeft <= 0) {
+          clearInterval(timerId);
+          proceedBtn.classList.add('active');
+          proceedBtn.disabled = false;
+          timerElement.textContent = "♡ 考える時間が終わりました ♡";
+        }
+      }, 1000);
+    }
+    
+    // 初期メッセージの表示
+    animateMessage();
+    
+    // メッセージの自動切り替え
+    setInterval(animateMessage, messageDelay);
+    
+    // タイマーの開始
+    startTimer();
+    
+    // ボタンのクリックイベント
+    proceedBtn.addEventListener('click', function() {
+      if (timeLeft <= 0) {
+        // ここに購入を続行するためのコードを追加
+        alert('カートに進みます♡');
+        // 実際にはAmazonのカートページにリダイレクトするなどの処理を追加
+      }
+    });
+  </script>
+</body>
 </html>
