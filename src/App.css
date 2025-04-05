@@ -64,9 +64,15 @@ body {
 
 /* Content layout */
 .content-wrapper {
-  display: flex;
+  /* display: flex; */
   gap: 2rem;
   margin-bottom: 2rem;
+}
+
+.product_and_message{
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 50px;
 }
 
 /* Product section */
