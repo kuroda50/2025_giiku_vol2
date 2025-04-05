@@ -3,7 +3,7 @@
   "name": "Amazon Cart Scraper",
   "version": "1.0",
   "description": "Amazonカートの情報を取得し、テキスト形式でダウンロードする拡張機能",
-  "permissions": ["activeTab", "scripting", "downloads"],
+  "permissions": ["activeTab", "scripting", "downloads", "storage", "tabs"],
   "host_permissions": ["https://www.amazon.co.jp/*"],
   "background": {
     "service_worker": "background.js"
@@ -16,6 +16,18 @@
   "action": {
     "default_popup": "popup.html"
   },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "static/js/*",
+        "static/css/*",
+        "src/App.js",
+        "src/App.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
   "content_scripts": [
     {
       "matches": ["https://www.amazon.co.jp/gp/cart/view.html*"],
