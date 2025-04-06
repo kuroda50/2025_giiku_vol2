@@ -33,11 +33,11 @@
       "js": ["content.js"]
     },
     {
-      "matches": ["https://www.amazon.co.jp/gp/cart/"],
+      "matches": ["https://www.amazon.co.jp/gp/cart/*"],
       "js": ["content.js"]
     },
     {
-      "matches": ["https://www.amazon.co.jp/cart?ref_=sw_gtc"],
+      "matches": ["https://www.amazon.co.jp/cart*"],
       "js": ["content.js"]
     }
   ]
