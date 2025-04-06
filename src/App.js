@@ -129,10 +129,32 @@ function initialize() {
   // Setup proceed button
   proceedBtn.addEventListener('click', () => {
     if (timeLeft <= 0) {
-      window.location.href = "https://www.amazon.co.jp/gp/cart/view.html?ref_=nav_cart";
+      window.history.back();
+      // setTimeout(() => {
+      //   redirectFlag = false;  // フラグをリセット
+      // }, 5000);
     }
   });
 }
+
+// window.addEventListener('load', () => {
+//   setTimeout(() => {
+//     chrome.storage.local.set({ redirectFlag: false }, () => {
+//       console.log("redirectFlag をリセットしました");
+//     });
+//   }, 5000);
+// });
+
+// window.addEventListener('popstate', () => {
+//   setTimeout(() => {
+//     chrome.storage.local.set({ redirectFlag: false }, () => {
+//       console.log("redirectFlag をリセットしました");
+//     });
+//   }, 5000);
+// });
+window.addEventListener('unload', () => {
+  chrome.runtime.sendMessage({ type: 'reset_redirect_flag_later' });
+});
 
 // Start everything when the page loads
 document.addEventListener('DOMContentLoaded', initialize);

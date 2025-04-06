@@ -18,13 +18,25 @@
 //             });
 //         }
 //     });
-// });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === "cart_saved") {
-        const url = chrome.runtime.getURL("build/index.html");
-        chrome.tabs.create({ url }, () => {
-            console.log("Reactアプリにリダイレクトしました");
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const tabId = tabs[0].id;  // 現在のタブのIDを取得
+            chrome.storage.local.set({ redirectFlag: true });
+            chrome.tabs.update(tabId, { url: chrome.runtime.getURL("build/index.html") });
+            console.log("Reactアプリに遷移しました");
         });
     }
+    if (message.type === 'reset_redirect_flag_later') {
+        setTimeout(() => {
+          chrome.storage.local.set({ redirectFlag: false }, () => {
+            console.log("5秒後に redirectFlag をリセットしました（background経由）");
+          });
+        }, 5000);
+      }
 });
+        // const url = chrome.runtime.getURL("build/index.html");
+        // chrome.tabs.create({ url }, () => {
+        //     console.log("Reactアプリにリダイレクトしました");
+        // });
