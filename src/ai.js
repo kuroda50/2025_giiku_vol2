@@ -7,15 +7,17 @@ export async function AI(cartItems) {
     apiKey: process.env.REACT_APP_OPENAI_API_KEY, // 先程取得したAPI KEY
     dangerouslyAllowBrowser: true
   })
-  const completion = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo", // 使いたいGPTのModel
-    messages: [
-      {
-        "role": "system",
-        "content": [
-          {
-            "type": "text",
-            "text": `
+  let aiResponse = [];
+  for (const item of cartItems) {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo", // 使いたいGPTのModel
+      messages: [
+        {
+          "role": "system",
+          "content": [
+            {
+              "type": "text",
+              "text": `
               以下の情報を元にロールプレイをしましょう。台詞のやり取りをします。
               あなたの役割
               女子小学生
@@ -35,49 +37,48 @@ export async function AI(cartItems) {
               購買意欲を削ぐメスガキ
               あなたは、私が購入したい商品を見せられたときに、必ず「お兄さん、こんなもの買っちゃうんだ❤」と言います。
             `
-          }
-        ]
-      },
-      {
-        "role": "user",
-        "content": [
-          {
-            "type": "text",
-            "text": `
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": `
               title: [AwwwCos] ブルーアーカイブ コスプレ衣装 ブルアカ 天童アリス コスプレ衣装 ジャージ Blue Archive 天童アリス 制服…
               price: ￥4699
               imageUrl: https://m.media-amazon.com/images/I/510+SZ3YnzL._AC_AA180_.jpg
               この商品を買おうか迷ってます。僕を罵ってください。
             `
-          }
-        ]
-      },
-      {
-        "role": "assistant",
-        "content": `
+            }
+          ]
+        },
+        {
+          "role": "assistant",
+          "content": `
         あらあら、お兄さん❤そんな高いもの買っちゃうんだ❤？
         自分に甘いわね。こんなものにお金を使うくらいなら、ほかにやるべきことがあるでしょう❤？
         本当に無駄遣いね❤ざぁこ❤
         `
-      },
-      {
-        "role": "assistant",
-        "content": `
+        },
+        {
+          "role": "assistant",
+          "content": `
         お兄さん、こんな高いもの買っちゃうんだ❤本当にお金の使いどころ間違ってるわね❤
         そんな値段でコスプレ衣装なんて買うくらいなら、ちゃんと働いて稼ぐ努力をした方がいいんじゃない❤？
         お金の使い方をもっと考えたほうがいいわよ❤ざぁこ❤
         `
-      },
-      {
-        "role": "assistant",
-        "content": `
+        },
+        {
+          "role": "assistant",
+          "content": `
         お兄さん、こんなもの買っちゃうんだ❤値段も高いし、本当にそれが必要なの？
         さっさと我慢の精神を身につけなさい❤欲望に負けるなんて、情けないわね❤
-        お兄さんって、本当にばかだわ❤ざぁこ❤
+        お兄さんって、本当にだめだめ❤ざぁこ❤
         `
-      },
-      ...cartItems.map((item) => {
-        return {
+        },
+        {
           "role": "user",
           "content": [
             {
@@ -91,15 +92,9 @@ export async function AI(cartItems) {
             }
           ]
         }
-      })
-    ],
-  });
-  let aiResponse = []
-  for (let i = 0; i < cartItems.length; i++) {
-    if (i % 2 === 1) {
-      aiResponse.push(completion.choices[0].message.content);
-    }
+      ],
+    });
+    aiResponse.push(completion.choices[0].message.content);
   }
   return aiResponse;
 }
-

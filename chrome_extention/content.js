@@ -45,6 +45,7 @@ if (window.location.href.includes("https://www.amazon.co.jp/gp/cart/view.html?re
             setTimeout(() => {
                 chrome.storage.local.set({ amazonCartItems: items }, () => {
                     console.log("カート情報を保存しました");
+                    chrome.runtime.sendMessage({ type: "cart_saved" });
                 });
             }, 2000); // 2秒の遅延
         } else {

@@ -22,7 +22,9 @@ function App() {
   // AI処理を実行
   useEffect(() => {
     if (cartItems.length > 0) {
+      console.log("カートアイテム:", cartItems);
       AI(cartItems).then((responses) => {
+        console.log("AIの応答(毎回):", responses);
         setAiResponse(prevResponse => [...prevResponse, ...responses]);
       });
     }
@@ -31,6 +33,7 @@ function App() {
   // 商品とAI応答を表示
   useEffect(() => {
     const contentWrapper = document.getElementById('content-wrapper');
+    console.log("AIの応答：", aiResponse);
     if (contentWrapper) {
       contentWrapper.innerHTML = ''; // 初期化
       let i = 0;
@@ -64,7 +67,7 @@ function createProductHTML(cartItem, message) {
         </div>
         <div class="character-container">
           <img 
-            src="https://images.unsplash.com/photo-1566206091558-7f218b696731?w=150&h=150&fit=crop" 
+            src="https://media.discordapp.net/attachments/1356221931896049677/1358051803576537321/817D353C-57B1-402E-82A6-EFD0F0B8ED7C.jpg?ex=67f26fcd&is=67f11e4d&hm=2a61390880e49d35d06fa6cbb14c1cec3b58d8eea529d6d8821727598e7ef637&=&format=webp&width=374&height=543" 
             alt="キャラクター" 
             class="character-image"
           >
@@ -126,7 +129,7 @@ function initialize() {
   // Setup proceed button
   proceedBtn.addEventListener('click', () => {
     if (timeLeft <= 0) {
-      alert('カートに進みます♡');
+      window.location.href = "https://www.amazon.co.jp/gp/cart/view.html?ref_=nav_cart";
     }
   });
 }

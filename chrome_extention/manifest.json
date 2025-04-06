@@ -19,10 +19,9 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "static/js/*",
-        "static/css/*",
-        "src/App.js",
-        "src/App.css"
+        "build/*",
+        "build/static/js/*",
+        "build/static/css/*"
       ],
       "matches": ["<all_urls>"]
     }
