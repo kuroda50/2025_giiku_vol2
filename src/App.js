@@ -67,7 +67,7 @@ function createProductHTML(cartItem, message) {
         </div>
         <div class="character-container">
           <img 
-            src="https://media.discordapp.net/attachments/1356221931896049677/1358051803576537321/817D353C-57B1-402E-82A6-EFD0F0B8ED7C.jpg?ex=67f26fcd&is=67f11e4d&hm=2a61390880e49d35d06fa6cbb14c1cec3b58d8eea529d6d8821727598e7ef637&=&format=webp&width=374&height=543" 
+            src="https://cdn.discordapp.com/attachments/1322887162445828116/1358308436483379311/mesugaki.png?ex=67f35ecf&is=67f20d4f&hm=304c93aaa897845337b365f6b560922895fac76021da8a1f191a5e00d0658e20&" 
             alt="キャラクター" 
             class="character-image"
           >
